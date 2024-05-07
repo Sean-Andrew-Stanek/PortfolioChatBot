@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify;
 import os
 import config
-import openai
+from openai import OpenAI
 
 
 #############
@@ -18,12 +18,15 @@ if not API_KEY:
     except ImportError:
         raise RuntimeError('API_KEY not found.  Either set your environment variable or create a file called chat_gpt_api_key.py and set your API_KEY there.')
 
-openai.api_key = API_KEY
+client = OpenAI(
+    api_key=API_KEY
+)
 
 app = Flask(__name__)
 
 messages = [{'role': 'system', 'content': config.system_role}]
 
+print('hello')
 #############
 #  Routes  #
 #############
@@ -31,13 +34,16 @@ messages = [{'role': 'system', 'content': config.system_role}]
 @app.route('/')
 def home():
     messages.append({'role': 'user', 'content': 'What do you think about the weather?'})
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model = 'gpt-3.5-turbo',
-        messages = messages
+        messages = messages,
+        max_tokens=50
     )
-    reply = response['choices'][0]['message']['content']
-    messages.append({'role':'assistant', 'conent': reply})
-    return reply
+#    print(response.choices[0].Choice.message)
+    #reply = response['choices'][0].message.content
+    #messages.append({'role':'assistant', 'conent': reply})
+    print(response.choices[0].message.content);
+    return ''
 
 
 
