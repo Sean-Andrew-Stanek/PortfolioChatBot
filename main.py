@@ -33,7 +33,7 @@ print('hello')
 
 @app.route('/')
 def home():
-    messages.append({'role': 'user', 'content': 'What do you think about the weather?'})
+    messages.append({'role': 'user', 'content': 'Tell me a joke.'})
     response = client.chat.completions.create(
         model = 'gpt-3.5-turbo',
         messages = messages,
@@ -43,7 +43,7 @@ def home():
     #reply = response['choices'][0].message.content
     #messages.append({'role':'assistant', 'conent': reply})
     print(response.choices[0].message.content);
-    return ''
+    return response.choices[0].message.content
 
 
 
