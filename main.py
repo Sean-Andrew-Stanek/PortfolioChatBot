@@ -42,6 +42,7 @@ def chat():
     data = request.json
     user_message = data['message']
 
+
     messages.append({'role': 'user', 'content': user_message}) #user message is added onto messages dictionary
 
     response = client.chat.completions.create( #creating the AI message
