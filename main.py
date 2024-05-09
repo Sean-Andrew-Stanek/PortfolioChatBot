@@ -39,9 +39,7 @@ def home():
         messages = messages,
         max_tokens=50
     )
-#    print(response.choices[0].Choice.message)
-    #reply = response['choices'][0].message.content
-    #messages.append({'role':'assistant', 'conent': reply})
+
     print(response.choices[0].message.content);
     return response.choices[0].message.content
 
