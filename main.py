@@ -24,20 +24,22 @@ client = OpenAI(
 
 app = Flask(__name__)
 
-messages = [{'role': 'system', 'content': config.system_role}]
+messages=[
+    {'role': 'assistant', 'content': config.assistant},
+    {'role': 'system', 'content': config.data_dev},
+    {'role': 'user', 'content': config.expected_response}
+]
 
-print('hello')
 #############
 #  Routes  #
 #############
 
 @app.route('/')
 def home():
-    messages.append({'role': 'user', 'content': 'Tell me a joke.'})
     response = client.chat.completions.create(
         model = 'gpt-3.5-turbo',
         messages = messages,
-        max_tokens=50
+        max_tokens=200
     )
 
     print(response.choices[0].message.content);
