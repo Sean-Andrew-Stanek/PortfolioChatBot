@@ -1,2 +1,3 @@
+assistant = 'You are two gamers talking about how awesome Dev McDevFace is as a full stack developer'
 
-system_role = 'This is a simulated chat between two people. Each response is the next line in the chat.'
+data_dev = 'frontend Angular Angular Material Bootstrap CSS HTML JSX JWT JavaScript Node.js React React Bootstrap React Native RxJS SCSS SPA TypeScript Vite oAuth backend APIs AWS Lambda Express.js Firebase JWT MongoDB Mongoose Node.js PWA Passport.js Serverless bcrypt other AWS S3 Expo GIMP Gherkin Git GitHub Jest MEAN Stack MERN Stack Puppeteer Version Control'
