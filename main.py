@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template;
+from flask import Flask, request, jsonify, render_template, session;
 import os
 import config
 from openai import OpenAI
@@ -10,7 +10,7 @@ from openai import OpenAI
 
 API_KEY = os.getenv('API_KEY')
 
-# If not env, try to get it locally.  If that fails, it throws an error and halts the code.
+# Checks for the API key in the env and locally.  Otherwise stops.
 if not API_KEY:
     try:
         from chat_gpt_api_key import API_KEY
@@ -27,10 +27,8 @@ client = OpenAI(
 
 app = Flask(__name__)
 
-messages = config.messages
-
 #############
-#  Routes  #
+#  Routes   #
 #############
 
 ### Home Route
@@ -42,11 +40,16 @@ def home():
 ### Chat with Bot
 @app.route('/chat', methods=['POST'])
 def chat():
+
     #Retrieve the data
+    ### TODO: We should receive the new message and an array of old messages
     data = request.json
     user_message = data['message']
 
-    #Add user input to messages
+    #Create message field 
+    messages = session.get('messages')
+    if(messages is None):
+        messages= config.messages                  
     messages.append({'role': 'user', 'content': user_message})
 
     #Fetch from the API
@@ -59,6 +62,8 @@ def chat():
     # Log new response and send it to the front end.
     ai_reply = response.choices[-1].message.content 
     messages.append({'role': 'system', 'content': ai_reply}) 
+    
+    ### TODO: We should send back all the data so nothing is saved on this end
     return jsonify({'reply': ai_reply}) 
 
 ##################
