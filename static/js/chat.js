@@ -18,11 +18,13 @@ form.addEventListener('submit', async (e) => {
 
     // Append AI reply to chat history
     const messageElement = document.createElement('div');
+    messageElement.classList.add('message-element');
     messageElement.textContent = `User: ${messageInput}`;
     chatHistory.appendChild(messageElement);
 
     const replyElement = document.createElement('div');
-    replyElement.textContent = `AI: ${aiReply}`;
+    replyElement.classList.add('reply-element');
+    replyElement.textContent = `AI:  ${aiReply}`;
     chatHistory.appendChild(replyElement);
 
     // Clear input field

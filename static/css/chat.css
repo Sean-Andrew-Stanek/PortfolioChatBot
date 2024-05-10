@@ -1,0 +1,38 @@
+body{
+    width: 90vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    background: radial-gradient(ellipse at top, #089c39, transparent),
+            radial-gradient(ellipse at bottom, #000000, transparent);
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+}
+
+.main-chat{
+    position: absolute;
+    background-color: white;
+    border: 2px solid black;
+    color: black;
+    padding: 3%;
+}
+
+#chat-history{
+
+
+    
+}
+
+.reply-element{
+    color: red;
+    text-align: left;
+    max-width: 50vw;
+}
+
+.message-element{
+    color: blue;
+    text-align: right;
+    max-width: 50vw;
+}

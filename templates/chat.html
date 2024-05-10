@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot</title>
+    <link rel="stylesheet" href="../static/css/chat.css">
 </head>
 <body>
-    <h1>Chatbot</h1>
-    <form id="chat-form">
-        <input type="text" id="message" name="message" placeholder="Type your message...">
-        <button type="submit">Send</button>
-    </form>
-
-    <div id="chat-history"></div>
+    <div class="main-chat">
+        <h1>Chatbot</h1>
+        <form id="chat-form">
+            <input type="text" id="message" name="message" placeholder="Type your message...">
+            <button type="submit">Send</button>
+        </form>
+        <div id="chat-history"></div>
+    </div>
     <script src="../static/js/chat.js"></script>
 </body>
 </html>
