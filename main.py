@@ -25,9 +25,8 @@ app = Flask(__name__)
 
 messages = [
     {'role': 'system', 'content': config.system_role},
-    {'role': 'assistant', 'content': config.assistant},
-    # {'role': 'system', 'content': config.data_dev},
-    # {'role': 'user', 'content': config.expected_response}
+    # {'role': 'assistant', 'content': config.assistant_role},
+    {'role': 'assistant', 'content': config.Jeriko_Carrera_Projects},
 ]
 
 #############
