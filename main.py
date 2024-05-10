@@ -23,12 +23,8 @@ client = OpenAI(
 
 app = Flask(__name__)
 
-messages = [
-    {'role': 'system', 'content': config.system_role},
-    {'role': 'assistant', 'content': config.assistant},
-    # {'role': 'system', 'content': config.data_dev},
-    # {'role': 'user', 'content': config.expected_response}
-]
+#Initial data
+messages = config.messages
 
 #############
 #  Routes  #
@@ -39,17 +35,20 @@ def home():
 
 @app.route('/chat', methods=['POST'])
 def chat():
+    #Retrieve the data
     data = request.json
     user_message = data['message']
 
+    #Add user input to messages
+    messages.append({'role': 'user', 'content': user_message})
 
-    messages.append({'role': 'user', 'content': user_message}) #user message is added onto messages dictionary
-
-    response = client.chat.completions.create( #creating the AI message
-        model='gpt-3.5-turbo', #ai model used
-        messages=messages, #this allows ai to use ALL the messages sent so far
-        max_tokens=200
+    #Fetch from the API
+    response = client.chat.completions.create( 
+        model= config.model,
+        messages=messages, 
+        max_tokens= config.max_tokens
     )
+
     ai_reply = response.choices[-1].message.content #defining the latest ai message
     messages.append({'role': 'system', 'content': ai_reply}) #ai message is added onto messages
 
