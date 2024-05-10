@@ -17,22 +17,29 @@ if not API_KEY:
     except ImportError:
         raise RuntimeError('API_KEY not found.  Either set your environment variable or create a file called chat_gpt_api_key.py and set your API_KEY there.')
 
+#####################
+#  Initializations  #
+#####################
+
 client = OpenAI(
     api_key=API_KEY
 )
 
 app = Flask(__name__)
 
-#Initial data
 messages = config.messages
 
 #############
 #  Routes  #
 #############
+
+### Home Route
 @app.route('/')
 def home():
     return render_template('chat.html')
 
+
+### Chat with Bot
 @app.route('/chat', methods=['POST'])
 def chat():
     #Retrieve the data
@@ -49,18 +56,10 @@ def chat():
         max_tokens= config.max_tokens
     )
 
-    ai_reply = response.choices[-1].message.content #defining the latest ai message
-    messages.append({'role': 'system', 'content': ai_reply}) #ai message is added onto messages
-
-    return jsonify({'reply': ai_reply}) #printing latest ai message
-
-############
-#  Return  #
-############
-
-@app.route('/get-next-line')
-def getNextLine():
-    return ''
+    # Log new response and send it to the front end.
+    ai_reply = response.choices[-1].message.content 
+    messages.append({'role': 'system', 'content': ai_reply}) 
+    return jsonify({'reply': ai_reply}) 
 
 ##################
 #  Server Start  #
