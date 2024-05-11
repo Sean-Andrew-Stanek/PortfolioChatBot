@@ -17,6 +17,8 @@ body{
     border: 2px solid black;
     color: black;
     padding: 3%;
+    width: 50%;
+    overflow-x: hidden;
 }
 /* 
 #chat-history{
@@ -24,6 +26,36 @@ body{
 
     
 } */
+
+.chat-bubble-span {    
+    display: flex;
+}
+
+.chat-bubble-container {
+    position: relative;
+    width: 80%;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.middle-image-container {
+    background-color: blue;
+}
+
+.middle-image-container > img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.middle-image-container > p {
+    padding: 0 5%;
+    position: relative;
+    z-index: 2;
+}
 
 .reply-element{
     color: red;

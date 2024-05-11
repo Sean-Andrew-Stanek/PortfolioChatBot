@@ -25,7 +25,7 @@ client = OpenAI(
     api_key=API_KEY
 )
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 #############
 #  Routes   #
