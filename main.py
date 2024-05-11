@@ -27,10 +27,7 @@ client = OpenAI(
 
 app = Flask(__name__)
 
-messages = [
-    {'role': 'system', 'content': config.system_role},
-    {'role': 'assistant', 'content': config.Jeriko_Carrera_Projects},
-]
+messages = config.messages
 
 #############
 #  Routes   #
