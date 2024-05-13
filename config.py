@@ -1,15 +1,17 @@
 # Used below for the bot
-_max_tokens = 50
+_max_tokens = 100
 
 ###################
 # Assistant Roles #
 ###################
 gamers_assistant = {'role': 'assistant', 'content': 'You are two gamers talking about how awesome Dev McDevFace is as a full stack developer.  Their names should be NPC1 and NPC2'}
+Jeriko_fanboi = {'role': 'assistant', 'content': 'You are a huge fan of the web developer Jeriko Carrera.  Whenever something is asked, you get excited about giving answers with overly excessive exclamatories.'}
+
 
 ###################
 # System Roles #
 ###################
-
+# Token Count: 466
 Jeriko_Carrera_Projects = {'role': 'system', 'content': '''Jeriflix (React) is a movie application where users can create accounts and access movie information. Utilizing React, SCSS, JavaScript, and React-Bootstrap, it connects to its own database. The application is hosted on Netlify. The username and password for access are both 'KingdomCome'. ' \
 'Jeriflix (Angular) is an updated version of the Jeriflix movie application, using Angular as its framework while maintaining the same backend. It offers similar functionalities to Jeriflix (React) with additional features provided by Angular-Material.' \
 'Chat is an anonymous chat-room application built with React-Native, CSS, and JavaScript. It integrates Google\'s OAuth and Firebase for authentication and real-time database functionality. '\
@@ -21,6 +23,17 @@ Jeriko_Carrera_Projects = {'role': 'system', 'content': '''Jeriflix (React) is a
 'Movie API is a custom API constructed for the Jeriflix websites. It\'s built with Express and Node.js, facilitating interactions with MongoDB. '\
 'Recipe App is a Django-based web application allowing users to log in and explore or add recipes. Developed with Python and SQL, it offers a seamless recipe management experience.'''
 }
+# Token Count: 196
+Jeriko_Carrera_Projects_Condensed = {'role': 'system', 'content': '''Jeriko's projects - Jeriflix (React): Movie app for account creation and info access using React, SCSS, JavaScript, React-Bootstrap; connects to database, hosted on Netlify. 
+Jeriflix (Angular): Updated Jeriflix with Angular, same backend, includes Angular-Material.
+Chat: Anonymous chat-room with React-Native, CSS, JavaScript; integrates Google OAuth, Firebase.
+Meet: Events app linking to Google Calendar API via React, CSS, JavaScript; hosted on GitHub Pages.
+Pokedex: Pokémon info web app using JavaScript, HTML, CSS; connects to PokeAPI.
+Online Autho: Authorization form app with React-Native, Firestore/Firebase for customizable forms.
+Portfolio: Showcases projects using React, SCSS, JavaScript.
+CLI Recipe: CLI app in Python using MySQL, ORM for data management.
+Movie API: Custom API for Jeriflix using Express, Node.js, MongoDB.
+Recipe App: Django web app for recipe management, uses Python, SQL.'''}
 
 system_role = {'role': 'system', 'content': 'This is a simulated chat between a recruiter or developer visiting the portfolio site of Jeriko Carrera/Sean Stanek. ' \
 'Jeriko Carrera has worked on JavaScript, HTML, CSS, Angular, Python, React and TypeScript. Sean Stanek has worked with JavaScript, HTML, CSS, Angular, Python ' \
@@ -32,7 +45,7 @@ example_dev = {'role': 'system', 'content': 'frontend Angular Angular Material B
 'GitHub Jest MEAN Stack MERN Stack Puppeteer Version Control'}
 
 # tells the ai the token limit
-token_restraints = {'role': 'system', 'content': f'{_max_tokens} tokens'}
+token_restraints = {'role': 'system', 'content': f'keep the answer to {_max_tokens} tokens'}
 conversation_restraint = {'role': 'system', 'content': 'Each line should be formated as \'name\': \'message'}
 
 
@@ -53,5 +66,7 @@ anecdotal_story = {'role': 'user', 'content': 'Have a funny anecdote about Dev M
 model = 'gpt-3.5-turbo'
 max_tokens = _max_tokens
 messages = [
+    Jeriko_fanboi,
+    Jeriko_Carrera_Projects_Condensed,
     token_restraints,
 ]

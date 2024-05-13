@@ -38,9 +38,6 @@ const chatBubble = (align, content) => {
 }
 
 
-chatHistory.appendChild(chatBubble('right', 'hello'));
-chatHistory.appendChild(chatBubble('left', 'this is a test'));
-
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const messageInput = document.getElementById('message').value;
