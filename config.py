@@ -42,6 +42,8 @@ conversation_restraint = {'role': 'system', 'content': 'Each line should be form
 initial_message = {'role': 'user', 'content': 'Welcome to the glorious portfolio of Dev McDevFace. What would you like to know?'}
 expected_response = {'role': 'user', 'content': 'Give the first five lines of the conversations and try to be specific.'}
 anecdotal_story = {'role': 'user', 'content': 'Have a funny anecdote about Dev McDevFace as a conversation'}
+left_suggestions ={'role': 'user', 'content': 'Give the user suggestions on things they could ask in relation to the portfolio of the developer.'}
+right_suggestions ={'role': 'user', 'content': 'Give the user suggestions on things they could ask in relation to the personal life of the developer.'}
 
 
 ##################
