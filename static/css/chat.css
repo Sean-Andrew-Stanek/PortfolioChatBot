@@ -20,41 +20,51 @@ body{
     width: 50%;
     overflow-x: hidden;
 }
-/* 
+
 #chat-history{
 
-
+    margin-top: 20px;
     
-} */
-
-.chat-bubble-span {    
-    display: flex;
 }
+
 
 .chat-bubble-container {
     position: relative;
-    width: 80%;
-
     display: flex;
-    flex-direction: column;
-
+    margin: 5px;
 }
 
-.middle-image-container {
-    background-color: blue;
-}
-
-.middle-image-container > img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-}
-
-.middle-image-container > p {
-    padding: 0 5%;
+.text-container {
     position: relative;
+    border-radius: 10px; 
+    width: 80%;   
     z-index: 2;
+    padding: 10px;
+}
+
+.bubble-direction {
+    position: absolute;
+    bottom: 0;
+    height: 50%;
+    width: 50%;   
+}
+
+.bubble-direction.left {
+    left:5px;
+}
+
+.bubble-direction.right {
+    right:5px;
+}
+
+.dark-green {
+    background-color: darkgreen;
+    color: white
+}
+
+.dark-blue {
+    background-color: darkblue;
+    color: white;
 }
 
 .reply-element{
