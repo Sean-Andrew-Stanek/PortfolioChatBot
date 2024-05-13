@@ -43,10 +43,6 @@ button:active{
     padding: 3%;
     width: 50%;
     overflow-x: hidden;
-    mask: 
-        radial-gradient(100% 100% at var(--_p) 0,#0000 99%,#000 102%) 
-        var(--_p) 100%/var(--t) var(--t) no-repeat,
-        linear-gradient(#000 0 0) padding-box;
     background: linear-gradient(135deg,#FE6D00,#1384C5) border-box;
     align-items: center;
     height: 85vh;
@@ -105,8 +101,6 @@ button:active{
 .dark-blue {
     background-color: darkblue;
     color: white;
-}
-
 }
 
 .text-container {
