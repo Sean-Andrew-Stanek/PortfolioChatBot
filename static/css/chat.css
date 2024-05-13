@@ -5,9 +5,9 @@ body{
     max-height: 100vh;
     background: radial-gradient(ellipse at top, #089c39, transparent),
             radial-gradient(ellipse at bottom, #000000, transparent);
-    background-repeat: no-repeat;
+    background-repeat:repeat-y;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
     position: relative;
     display: grid;
     place-content: center;
@@ -19,6 +19,7 @@ body{
 #submit-button{
     cursor: pointer;
     background-color: rgb(255, 255, 255);
+
     border-radius: 30% 45% 60% 75%;
     transition: all .5s;
     padding: 15px 32px;
@@ -36,14 +37,25 @@ button:active{
 
 .main-chat{
     position: absolute;
-    background-color: white;
     border: 2px solid black;
+    border-radius: 15px;
     color: black;
     padding: 3%;
+    width: 50%;
+    overflow-x: hidden;
+    mask: 
+        radial-gradient(100% 100% at var(--_p) 0,#0000 99%,#000 102%) 
+        var(--_p) 100%/var(--t) var(--t) no-repeat,
+        linear-gradient(#000 0 0) padding-box;
+    background: linear-gradient(135deg,#FE6D00,#1384C5) border-box;
+    align-items: center;
+    height: 85vh;
+    overflow-y: auto;
 }
-/* 
+
 #chat-history{
     margin-top: 20px;
+
 }
 
 /******************/
@@ -54,6 +66,46 @@ button:active{
     position: relative;
     display: flex;
     margin: 5px;
+
+}
+
+.text-container {
+    position: relative;
+    border-radius: 10px 10px 10px 10px; 
+    width: 80%;   
+    z-index: 2;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.text-container.dark-blue {
+    left:5px;
+    border-left: black solid 2px;
+    border-top: black solid 2px;
+    border-bottom-left-radius: 0 0;
+
+}
+
+.text-container.dark-green {
+    right:5px;
+    border-right: black solid 2px;
+    border-bottom: black solid 2px;
+    border-bottom-right-radius: 0 0;
+}
+
+/******************************/
+/*  Chat Bubble Color Schemes */
+/******************************/
+
+.dark-green {
+    background-color: darkgreen;
+    color: white
+}
+
+.dark-blue {
+    background-color: darkblue;
+    color: white;
+}
 
 }
 

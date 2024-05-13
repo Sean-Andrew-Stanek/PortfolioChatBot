@@ -25,12 +25,7 @@ client = OpenAI(
     api_key=API_KEY
 )
 
-app = Flask(__name__)
-
-messages = [
-    {'role': 'system', 'content': config.system_role},
-    {'role': 'assistant', 'content': config.Jeriko_Carrera_Projects},
-]
+app = Flask(__name__, static_folder='static')
 
 #############
 #  Routes   #
@@ -54,7 +49,7 @@ def chat():
     #Create message field 
     messages = session.get('messages')
     if(messages is None):
-        messages= config.messages                  
+        messages= config.messages         
     messages.append({'role': 'user', 'content': user_message})
 
     #Fetch from the API
