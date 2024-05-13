@@ -3,50 +3,43 @@ const chatHistory = document.getElementById('chat-history');
 
 
 const chatBubble = (align, content) => {
-    const chatSpan = document.createElement('span');
-    chatSpan.classList.add('chat-bubble-span');
 
-    console.log(align);
-    if(align ==='right')
-        chatSpan.style.flexDirection = 'row-reverse'
+    leftColorScheme = 'dark-blue';
+    rightColorScheme = 'dark-green';
 
     const chatContainer = document.createElement('div');
     chatContainer.classList.add('chat-bubble-container');
 
-    const topImage = document.createElement('img');
-    topImage.src = '/static/assets/ChatTop.png';
-    topImage.style.width = '100%';
+    const textContainer = document.createElement('div');
+    textContainer.className = 'text-container'
+    textContainer.textContent = content;
 
-    const bottomImage = document.createElement('img');
-    bottomImage.src = '/static/assets/ChatBottom.png';
-    bottomImage.style.width = '100%';
-    bottomImage.style.height = '100%';
-    if(align === 'left')
-        bottomImage.style.transform = 'scaleX(-1)';
+    const bubbleDirection = document.createElement('div');
+    bubbleDirection.className = 'bubble-direction';
 
-    const middleImageContainer = document.createElement('div');
-    middleImageContainer.classList.add('middle-image-container')
-    middleImageContainer.style.position = 'relative';
-    middleImageContainer.style.width = '100%';
+    if(align === 'right') {
+        textContainer.classList.add(rightColorScheme);
+        bubbleDirection.classList.add(rightColorScheme);
+        bubbleDirection.style.right = '0'; //text bubble margin
+        chatContainer.style.justifyContent='flex-end'
+        
+    } else {
+        textContainer.classList.add(leftColorScheme);
+        bubbleDirection.classList.add(leftColorScheme);
+        bubbleDirection.style.left = '0'; //text bubble margin
+    }
 
-    const middleImage = document.createElement('img');
-    middleImage.src = '/static/assets/ChatMiddle.png';
+    chatContainer.appendChild(textContainer);
+    chatContainer.appendChild(bubbleDirection);
 
-    const middleText = document.createElement('p')
-    middleText.textContent = content;
 
-    middleImageContainer.appendChild(middleImage);
-    middleImageContainer.appendChild(middleText);
-
-    chatContainer.appendChild(topImage);
-    chatContainer.appendChild(middleImageContainer);
-    chatContainer.appendChild(bottomImage);
-
-    chatSpan.appendChild(chatContainer);
-
-    return chatSpan;
+    return chatContainer;
 
 }
+
+
+chatHistory.appendChild(chatBubble('right', 'hello'));
+chatHistory.appendChild(chatBubble('left', 'this is a test'));
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
