@@ -1,22 +1,27 @@
 const form = document.getElementById('chat-form');
 const chatHistory = document.getElementById('chat-history');
 
-
+// Single Chat Bubble
 const chatBubble = (align, content) => {
 
+    //Class names for chat bubble styles
     leftColorScheme = 'dark-blue';
     rightColorScheme = 'dark-green';
 
+    //Master Container
     const chatContainer = document.createElement('div');
     chatContainer.classList.add('chat-bubble-container');
 
+    //Text Container
     const textContainer = document.createElement('div');
     textContainer.className = 'text-container'
     textContainer.textContent = content;
 
+    //Decorative Div
     const bubbleDirection = document.createElement('div');
     bubbleDirection.className = 'bubble-direction';
 
+    //Proper alignment
     if(align === 'right') {
         textContainer.classList.add(rightColorScheme);
         bubbleDirection.classList.add(rightColorScheme);
@@ -29,15 +34,14 @@ const chatBubble = (align, content) => {
         bubbleDirection.style.left = '0'; //text bubble margin
     }
 
+    //Attach all children and send
     chatContainer.appendChild(textContainer);
     chatContainer.appendChild(bubbleDirection);
-
-
     return chatContainer;
 
 }
 
-
+// Listener for new user chat request
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const messageInput = document.getElementById('message').value;
@@ -53,21 +57,12 @@ form.addEventListener('submit', async (e) => {
     const data = await response.json();
     const aiReply = data.reply;
 
+    //Adds two new bubbles - 
+    //User request => left
+    //AI response => right
     chatHistory.appendChild(chatBubble('left', `User: ${messageInput}`));
     chatHistory.appendChild(chatBubble('right', `AI:  ${aiReply}`))
 
-/* 
-    // Append AI reply to chat history
-    const messageElement = document.createElement('div');
-    messageElement.classList.add('message-element');
-    messageElement.textContent = `User: ${messageInput}`;
-    chatHistory.appendChild(messageElement);
-
-    const replyElement = document.createElement('div');
-    replyElement.classList.add('reply-element');
-    replyElement.textContent = `AI:  ${aiReply}`;
-    chatHistory.appendChild(replyElement); */
-
-    // Clear input field
+    //Resets request field
     document.getElementById('message').value = '';
 });

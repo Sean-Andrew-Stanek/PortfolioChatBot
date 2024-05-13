@@ -27,6 +27,9 @@ body{
     
 }
 
+/******************/
+/*  Chat Bubbles  */
+/******************/
 
 .chat-bubble-container {
     position: relative;
@@ -56,6 +59,10 @@ body{
 .bubble-direction.right {
     right:5px;
 }
+
+/******************************/
+/*  Chat Bubble Color Schemes */
+/******************************/
 
 .dark-green {
     background-color: darkgreen;
