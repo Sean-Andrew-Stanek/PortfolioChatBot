@@ -7,14 +7,16 @@
     <link rel="stylesheet" href="../static/css/chat.css">
 </head>
 <body>
+    <div id="left-suggestions"></div>
     <div class="main-chat">
         <h1>Developer HypeBot</h1>
         <form id="chat-form">
             <input type="text" id="message" name="message" placeholder="Type your message...">
-            <button type="submit">Send</button>
+            <button id="submit-button" type="submit">Send</button>
         </form>
         <div id="chat-history"></div>
     </div>
+    <div id="right-suggestions"></div>
     <script src="../static/js/chat.js"></script>
 </body>
 </html>
