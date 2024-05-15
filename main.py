@@ -42,14 +42,19 @@ def home():
 def chat():
 
     #Retrieve the data
-    ### TODO: We should receive the new message and an array of old messages
     data = request.json
     user_message = data['message']
 
-    #Create message field 
+    # Create message field 
+    # Looks locally, then from the request and then to the base parameters
     messages = session.get('messages')
     if(messages is None):
-        messages= config.messages         
+        messages = data['messages']
+        if(messages is None):
+            ############################################
+            ### EDIT YOUR BASE MESSAGE VARIABLE HERE ###
+            ############################################
+            messages= config.sean_messasges         
     messages.append({'role': 'user', 'content': user_message})
 
     #Fetch from the API
@@ -63,8 +68,8 @@ def chat():
     ai_reply = response.choices[-1].message.content 
     messages.append({'role': 'system', 'content': ai_reply}) 
     
-    ### TODO: We should send back all the data so nothing is saved on this end
-    return jsonify({'reply': ai_reply}) 
+    #return latest message and all messages
+    return jsonify({'reply': ai_reply, 'messages': messages}) 
 
 ##################
 #  Server Start  #
