@@ -70,7 +70,7 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
         data = req.get_json()
 
         ###  Verifies request format
-        if data['messages'] is None or data['new_message'] is None:
+        if data['messages'] is None or not isinstance(data['new_message'], str):
             return func.HttpResponse(
                 json.dumps({
                     'status': 'error',
@@ -83,7 +83,7 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
         ### TODO: Limit the size of user_messages
         ### TODO: Remove messages which exceed the limit
         user_messages=data['messages'].copy()
-        user_messages.append(data['new_message'])
+        user_messages.append({'role': 'user', 'content': data['new_message']})
 
         ###  Combine all messages
         messages = config.MESSAGES.copy()
