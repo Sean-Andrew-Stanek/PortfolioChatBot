@@ -5,7 +5,6 @@ and return a new response from the OpenAI API based on parameters found
 within the config.py file.
 """
 
-
 import os
 import json
 from openai import OpenAI
@@ -13,12 +12,9 @@ import azure.functions as func
 import config
 
 
+app = func.FunctionApp()
 
-app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
-
-
-@app.route(route="get_message")
-def get_message(req: func.HttpRequest) -> func.HttpResponse:
+def main(req: func.HttpRequest) -> func.HttpResponse:
     """
     This function handles the request.
     It extracts messages and new_messages to make a new API request.
