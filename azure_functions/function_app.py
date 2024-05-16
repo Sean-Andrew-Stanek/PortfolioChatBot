@@ -96,8 +96,8 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
             max_tokens= config.MAX_TOKENS
         )
 
-        ### ai_reply = easy to read response
-        ### user_messages = stores conversation on front end
+        ### ai_reply = easy to read string response
+        ### user_messages = stores entire conversation on front end in returnable format
         ai_reply = response.choices[-1].message.content
         user_messages.append({'role': 'system', 'content': ai_reply})
 
