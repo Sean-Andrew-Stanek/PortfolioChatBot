@@ -86,6 +86,31 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
             messages = config.MESSAGES
         else:
             messages = data['messages']
+        messages.append(data['new_message'])
+
+        #Fetch from the API
+        response = client.chat.completions.create(
+            model= config.MODEL,
+            messages=messages,
+            max_tokens= config.MAX_TOKENS
+        )
+
+        # Adds the new response to the messages so it can be resent in the next request
+        ai_reply = response.choices[-1].message.content
+        messages.append({'role': 'system', 'content': ai_reply})
+
+        return func.HttpResponse(
+            json.dumps(
+                {
+                    'reply': ai_reply,
+                    'messages': messages
+                }
+            ),
+            status_code=400,
+            mimetype='application/json'
+        )
+
+
 
 
 
