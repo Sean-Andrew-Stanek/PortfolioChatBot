@@ -27,13 +27,14 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
     Args: 
         req (funct.HttpRequest):
             JSON object:
-                messages: Previous Messags
-                new_message: New request to API
+                messages: Previous messages formatted the same way as the response
+                new_message: String of the newest user message
         
     Returns:
         func.HttpResponse:
             JSON object:
-                messages: new list of messages
+                reply: String of the newest openAI response content
+                messages: Formatted version of non-default openAI messages for future use
 
     """
 
