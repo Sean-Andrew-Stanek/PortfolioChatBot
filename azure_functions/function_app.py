@@ -80,14 +80,14 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
                 mimetype='application/json'
             )
 
-        ###  appends the new_message to the old messages
-        user_messages=data['messages']
-        messages = messages = config.MESSAGES.copy()
-        
+        ### TODO: Limit the size of user_messages
+        ### TODO: Remove messages which exceed the limit
+        user_messages=data['messages'].copy()
+        user_messages.append(data['new_message'])
+
+        ###  Combine all messages
+        messages = config.MESSAGES.copy()
         messages.append(user_messages)
-
-
-        #TODO: Remove messages 
 
         #Fetch from the API
         response = client.chat.completions.create(
@@ -96,15 +96,16 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
             max_tokens= config.MAX_TOKENS
         )
 
-        # Adds the new response to the messages so it can be resent in the next request
+        ### ai_reply = easy to read response
+        ### user_messages = stores conversation on front end
         ai_reply = response.choices[-1].message.content
-        messages.append({'role': 'system', 'content': ai_reply})
+        user_messages.append({'role': 'system', 'content': ai_reply})
 
         return func.HttpResponse(
             json.dumps(
                 {
                     'reply': ai_reply,
-                    'messages': messages
+                    'messages': user_messages
                 }
             ),
             status_code=400,
