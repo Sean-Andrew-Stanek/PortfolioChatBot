@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template, session;
 import os
-import config
+import azure_functions.config as config
 from openai import OpenAI
 
 
@@ -59,9 +59,9 @@ def chat():
 
     #Fetch from the API
     response = client.chat.completions.create( 
-        model= config.model,
+        model= config.MODEL,
         messages=messages, 
-        max_tokens= config.max_tokens
+        max_tokens= config.MAX_TOKENS
     )
 
     # Log new response and send it to the front end.

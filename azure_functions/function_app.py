@@ -9,7 +9,6 @@ import os
 import json
 from openai import OpenAI
 import azure.functions as func
-
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
 
@@ -79,7 +78,11 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
         ###  appends the new_message to the old messages
         ###  TODO: Handle no new message or parse it for "hidden request"
 
-        if(messages)
+        messages = ''
+
+        if(data['messages'] == ''):
+            messages = config.MESSAGES
+
 
 
 
