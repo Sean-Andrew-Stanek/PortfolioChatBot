@@ -99,7 +99,6 @@ sean_messasges = [
     Sean_Website, #32
     token_restraints, #7
     conversation_restraint, #13
-    expected_response
 ]
 
 ################

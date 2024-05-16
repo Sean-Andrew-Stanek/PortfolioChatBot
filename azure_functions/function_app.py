@@ -81,12 +81,13 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
             )
 
         ###  appends the new_message to the old messages
-        ###  TODO: Handle no new message or parse it for "hidden request"
-        if data['messages'] == '':
-            messages = config.MESSAGES
-        else:
-            messages = data['messages']
-        messages.append(data['new_message'])
+        user_messages=data['messages']
+        messages = messages = config.MESSAGES.copy()
+        
+        messages.append(user_messages)
+
+
+        #TODO: Remove messages 
 
         #Fetch from the API
         response = client.chat.completions.create(
