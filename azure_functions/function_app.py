@@ -110,14 +110,7 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
             mimetype='application/json'
         )
 
-
-
-
-
-
-
-
-    except json.JSONDecodeError as e:
+    except json.JSONDecodeError:
         return func.HttpResponse(
             json.dumps(
                 {
