@@ -5,10 +5,15 @@ and return a new response from the OpenAI API based on parameters found
 within the config.py file.
 """
 
+
 import os
 import json
 from openai import OpenAI
 import azure.functions as func
+import config
+
+
+
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
 
@@ -47,7 +52,7 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
             status_code=400,
             mimetype='application/json'
         )
-    
+
 
 
     #####################
@@ -65,7 +70,7 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
         data = req.get_json()
 
         ###  Verifies request format
-        if(data['messages'] is None or data['new_message'] is None):
+        if data['messages'] is None or data['new_message'] is None:
             return func.HttpResponse(
                 json.dumps({
                     'status': 'error',
@@ -74,14 +79,15 @@ def get_message(req: func.HttpRequest) -> func.HttpResponse:
                 status_code=400,
                 mimetype='application/json'
             )
-        
+
         ###  appends the new_message to the old messages
         ###  TODO: Handle no new message or parse it for "hidden request"
-
-        messages = ''
-
-        if(data['messages'] == ''):
+        if data['messages'] == '':
             messages = config.MESSAGES
+        else:
+            messages = data['messages']
+
+
 
 
 
