@@ -64,12 +64,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     #  Request Processing  #
     ########################
 
-    def request_error():
+    def request_error(trace_code):
         return func.HttpResponse(
             json.dumps(
                 {
                     'status': 'error',
-                    'message': 'Invalid request.'
+                    'message': 'Invalid request.',
+                    'trace code': trace_code
                 }),
             status_code=400,
             mimetype='application/json'
@@ -81,19 +82,25 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     ###  Verifies JSON type
     except json.JSONDecodeError:
-        return request_error()
+        return request_error(1)
 
     ###  Verifies request keys
     if 'messages' not in data or 'new_message' not in data:
-        return request_error()
-
-    ###  Verifies messages format
-    if not (isinstance(data['messages'], list) and all(isinstance(item, dict) and 'role' in item and 'content' in item for item in data['messages'])):
-        return request_error()
+        return request_error(2)
 
     ###  Verifies request new_message is a string
     if not isinstance(data['new_message'], str):
-        return request_error()
+        return request_error(3)
+
+    ###  Verifies messages format
+    if not isinstance(data['messages'], list):
+        return request_error(4)
+
+    for i, item in enumerate(data['messages']):
+        if not isinstance(item, dict):
+            return request_error(f'message {i}')
+        if 'role' not in item or 'content' not in item:
+            return request_error(f'message {i}')
 
     ### TODO: Limit the size of user_messages
     ### TODO: Remove messages which exceed the limit
@@ -102,7 +109,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     ###  Combine all messages
     messages = config.MESSAGES.copy()
-    messages.append(user_messages)
+    messages.extend(user_messages)
 
     #Fetch from the API
     response = client.chat.completions.create(
@@ -126,5 +133,3 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         status_code=400,
         mimetype='application/json'
     )
-
-
