@@ -39,6 +39,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     #############
 
     api_key = os.getenv('API_KEY')
+    print(os.getenv('API_KEY'))
 
     if not api_key:
         return func.HttpResponse(
@@ -59,64 +60,71 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     client = OpenAI(api_key=api_key)
 
 
-    ##############
-    #  Function  #
-    ##############
+    ########################
+    #  Request Processing  #
+    ########################
 
-    try:
-        data = req.get_json()
-
-        ###  Verifies request format
-        if data['messages'] is None or not isinstance(data['new_message'], str):
-            return func.HttpResponse(
-                json.dumps({
-                    'status': 'error',
-                    'message': 'Error with request form'
-                }),
-                status_code=400,
-                mimetype='application/json'
-            )
-
-        ### TODO: Limit the size of user_messages
-        ### TODO: Remove messages which exceed the limit
-        user_messages=data['messages'].copy()
-        user_messages.append({'role': 'user', 'content': data['new_message']})
-
-        ###  Combine all messages
-        messages = config.MESSAGES.copy()
-        messages.append(user_messages)
-
-        #Fetch from the API
-        response = client.chat.completions.create(
-            model= config.MODEL,
-            messages=messages,
-            max_tokens= config.MAX_TOKENS
-        )
-
-        ### ai_reply = easy to read string response
-        ### user_messages = stores entire conversation on front end in returnable format
-        ai_reply = response.choices[-1].message.content
-        user_messages.append({'role': 'system', 'content': ai_reply})
-
-        return func.HttpResponse(
-            json.dumps(
-                {
-                    'reply': ai_reply,
-                    'messages': user_messages
-                }
-            ),
-            status_code=400,
-            mimetype='application/json'
-        )
-
-    except json.JSONDecodeError:
+    def request_error():
         return func.HttpResponse(
             json.dumps(
                 {
                     'status': 'error',
                     'message': 'Invalid request.'
-                },
-                status_code=400,
-                mimetype='application/json'
-            )
+                }),
+            status_code=400,
+            mimetype='application/json'
         )
+
+
+    try:
+        data = req.get_json()
+
+    ###  Verifies JSON type
+    except json.JSONDecodeError:
+        return request_error()
+
+    ###  Verifies request keys
+    if 'messages' not in data or 'new_message' not in data:
+        return request_error()
+
+    ###  Verifies messages format
+    if not (isinstance(data['messages'], list) and all(isinstance(item, dict) and 'role' in item and 'content' in item for item in data['messages'])):
+        return request_error()
+
+    ###  Verifies request new_message is a string
+    if not isinstance(data['new_message'], str):
+        return request_error()
+
+    ### TODO: Limit the size of user_messages
+    ### TODO: Remove messages which exceed the limit
+    user_messages=data['messages'].copy()
+    user_messages.append({'role': 'user', 'content': data['new_message']})
+
+    ###  Combine all messages
+    messages = config.MESSAGES.copy()
+    messages.append(user_messages)
+
+    #Fetch from the API
+    response = client.chat.completions.create(
+        model= config.MODEL,
+        messages=messages,
+        max_tokens= config.MAX_TOKENS
+    )
+
+    ### ai_reply = easy to read string response
+    ### user_messages = stores entire conversation on front end in returnable format
+    ai_reply = response.choices[-1].message.content
+    user_messages.append({'role': 'system', 'content': ai_reply})
+
+    return func.HttpResponse(
+        json.dumps(
+            {
+                'reply': ai_reply,
+                'messages': user_messages
+            }
+        ),
+        status_code=400,
+        mimetype='application/json'
+    )
+
+
