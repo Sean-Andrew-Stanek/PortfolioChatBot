@@ -104,8 +104,18 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     ### TODO: Limit the size of user_messages
     ### TODO: Remove messages which exceed the limit
-    user_messages=data['messages'].copy()
-    user_messages.append({'role': 'user', 'content': data['new_message']})
+    character_count = 0
+    new_data = {"reply": data.reply, "messages": []}
+    for message in reversed(data['messages']):
+        content_length = len(message['content'])
+        if character_count + content_length > 500:
+            break
+        character_count += content_length
+        new_data['messages'].append(message)
+
+
+    user_messages=new_data['messages'].copy()
+    user_messages.append({'role': 'user', 'content': new_data['new_message']})
 
     ###  Combine all messages
     messages = config.MESSAGES.copy()
