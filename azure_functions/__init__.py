@@ -15,6 +15,7 @@ import config
 app = func.FunctionApp()
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
+
     """
     This function handles the request.
     It extracts messages and new_messages to make a new API request.
@@ -33,6 +34,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 messages: Formatted version of non-default openAI messages for future use
 
     """
+
+
+
+
 
     #############
     #  API KEY  #
@@ -73,7 +78,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 }),
             status_code=400,
             mimetype='application/json'
-        )
+        ) 
 
 
     try:
@@ -82,6 +87,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     ###  Verifies JSON type
     except json.JSONDecodeError:
         return request_error(1)
+    
+    print(f'Request body:{data}')
 
     ###  Verifies request keys
     if 'messages' not in data or 'new_message' not in data:
@@ -115,12 +122,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     modified_data=reversed_messages.copy()
     modified_data['messages'].append({'role': 'user', 'content': data['new_message']})
-    
+
     ###  Combine all messages
     messages = config.MESSAGES.copy()
     messages.extend(modified_data['messages'])
-
-    
 
 
     #Fetch from the API
@@ -135,13 +140,15 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     ai_reply = response.choices[-1].message.content
     messages.append({'role': 'system', 'content': ai_reply})
 
+    print(messages);
+    
     return func.HttpResponse(
         json.dumps(
             {
-                'reply': '', #ai_reply,
+                'reply': ai_reply,
                 'messages': messages #user_messages
             }
         ),
-        status_code=400,
+        status_code=200,
         mimetype='application/json'
     )

@@ -7,7 +7,7 @@
         "type": "httpTrigger",
         "direction": "in",
         "name": "req",
-        "methods": ["post", "get"],
+        "methods": ["post"],
         "route": "get_message"
       },
       {
