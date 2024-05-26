@@ -39,7 +39,6 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     #############
 
     api_key = os.getenv('API_KEY')
-    print(os.getenv('API_KEY'))
 
     if not api_key:
         return func.HttpResponse(
@@ -105,21 +104,24 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     ### TODO: Limit the size of user_messages
     ### TODO: Remove messages which exceed the limit
     character_count = 0
-    new_data = {"reply": data.reply, "messages": []}
+    reversed_messages = {'new_message': data['new_message'], 'messages': []}
     for message in reversed(data['messages']):
         content_length = len(message['content'])
         if character_count + content_length > 500:
             break
         character_count += content_length
-        new_data['messages'].append(message)
+        reversed_messages['messages'].append(message)
 
 
-    user_messages=new_data['messages'].copy()
-    user_messages.append({'role': 'user', 'content': new_data['new_message']})
-
+    modified_data=reversed_messages.copy()
+    modified_data['messages'].append({'role': 'user', 'content': data['new_message']})
+    
     ###  Combine all messages
     messages = config.MESSAGES.copy()
-    messages.extend(user_messages)
+    messages.extend(modified_data['messages'])
+
+    
+
 
     #Fetch from the API
     response = client.chat.completions.create(
@@ -131,13 +133,13 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     ### ai_reply = easy to read string response
     ### user_messages = stores entire conversation on front end in returnable format
     ai_reply = response.choices[-1].message.content
-    user_messages.append({'role': 'system', 'content': ai_reply})
+    messages.append({'role': 'system', 'content': ai_reply})
 
     return func.HttpResponse(
         json.dumps(
             {
-                'reply': ai_reply,
-                'messages': user_messages
+                'reply': '', #ai_reply,
+                'messages': messages #user_messages
             }
         ),
         status_code=400,
