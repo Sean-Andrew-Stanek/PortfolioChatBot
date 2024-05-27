@@ -108,8 +108,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         if 'role' not in item or 'content' not in item:
             return request_error(f'message {i}')
 
-    ### TODO: Limit the size of user_messages
-    ### TODO: Remove messages which exceed the limit
+    ### TODO: Limit the size of new_message
     character_count = 0
     reversed_messages = {'new_message': data['new_message'], 'messages': []}
     for message in reversed(data['messages']):
@@ -117,7 +116,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         if character_count + content_length > 500:
             break
         character_count += content_length
-        reversed_messages['messages'].append(message)
+        reversed_messages['messages'].insert(0,message)
 
 
     modified_data=reversed_messages.copy()

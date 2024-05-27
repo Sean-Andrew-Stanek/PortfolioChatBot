@@ -38,7 +38,7 @@ Recipe App: Django web app for recipe management, uses Python, SQL.'''}
 #Token Count: ~338
 Sean_Andrew_Stanek_Resume_Condensed = {'role': 'system', 'content': '''Sean's resume -
 Contact: +82 010-9365-1945, sean.andrew.stanek@gmail.com, https://github.com/Sean-Andrew-Stanek
-Summary: Full Stack Developer experience in 
+Summary: experience in 
 TechXEducation.  Over 15 years in 
 team-based,, expert in HTML5, CSS3, JS (Angular, React, Node.js), AWS, MongoDB.
 Education: B.S. Interdisciplinary Studies, Texas A&M Univ; Full Stack Web Dev Bootcamp, Sep 2023 - Feb 2024, CareerFoundry.
