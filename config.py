@@ -4,7 +4,7 @@ List of objects which will shape the AI's message
 """
 
 # Used below for the bot
-_MAX_TOKENS = 100
+_MAX_TOKENS = 125
 
 ###################
 # Assistant Roles #
@@ -37,13 +37,12 @@ Recipe App: Django web app for recipe management, uses Python, SQL.'''}
 
 #Token Count: ~338
 Sean_Andrew_Stanek_Resume_Condensed = {'role': 'system', 'content': '''Sean's resume -
-Contact: +82 010-9365-1945, sean.andrew.stanek@gmail.com, https://github.com/Sean-Andrew-Stanek
+Contact: +82 010-9365-1945, sean.andrew.stanek@gmail.com, https://www.sean-andrew-stanek.com
 Summary: experience in 
 TechXEducation.  Over 15 years in 
-team-based,, expert in HTML5, CSS3, JS (Angular, React, Node.js), AWS, MongoDB.
+team-based, problem solving professions, expert in HTML5, CSS3, JS (Angular, React, Node.js), AWS, MongoDB.
 Education: B.S. Interdisciplinary Studies, Texas A&M Univ; Full Stack Web Dev Bootcamp, Sep 2023 - Feb 2024, CareerFoundry.
 Teaching Experience: Int’l STEM School (Nov 2021 - Mar 2024): Boosted MAP scores with Google App Scripts, 100% homework turn-in with tech-based curriculum. Various Schools (Sep 2005 - Nov 2021): Developed Unity, C# teaching apps, managed diverse classroom challenges.
-Portfolio: https://sean-andrew-stanek.github.io/portfolio-website
 Skills: Front-end: HTML, CSS, JS, React, Angular, UX/UI, Bootstrap. Back-end: REST APIs, Express, Node.js, Java, C#, C, jQuery, AWS (S3, EC2, VPC, IAM, Lambda), SQL, JSON. Other: Scrum, Agile, GIT, Version Control.
 Projects: Movie Database API & Client: MEAN/MERN Stack, view movie data, secure CRUD operations. 
 LetsMeet - Meeting App: React, oAuth, Serverless, AWS Lambda, Jest, PWA, serverless React Client/PWA, oAuth integration, 
@@ -52,7 +51,8 @@ custom portfolio.'''}
 
 #Token Count: 32
 Sean_Website = {'role': 'system', 'content': '''If you do not know the answer to a question,
-please inform the user to visit https://www.sean-andrew-stanek.com for more information.'''}
+please inform the user to visit https://www.sean-andrew-stanek.com for more information.  
+The endpoints are /, /contact, /skills, /portfolio and /case-study'''}
 
 
 #Token Count: 19
@@ -63,9 +63,13 @@ recruiter or developer visiting the portfolio site of Jeriko Carrera'''}
 #Token Count: 7
 token_restraints = {'role': 'system', 'content': f'keep the answer to {_MAX_TOKENS} tokens'}
 #Token Count: 13
-conversation_restraint = {'role': 'system', 'content': '''Each line should be
-formated as \'name\': \'message'''}
-
+conversation_restraint = {'role': 'system', 'content': '''The return should be an array of
+JSON objects with keys being the name of the speaker and the value being the message.  It should not throw an error
+for json.parse.  Example: [
+    {"NPC1": "Message from NPC1"},
+    {"NPC2": "Message from NPC2"},
+    {"NPC1": "Another message from NPC1"}
+]'''}
 
 
 ##############
@@ -108,5 +112,5 @@ sean_messasges = [
 ################
 
 MODEL = 'gpt-3.5-turbo'
-MAX_TOKENS = _MAX_TOKENS
+MAX_TOKENS = _MAX_TOKENS + 100
 MESSAGES = sean_messasges

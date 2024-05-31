@@ -78,7 +78,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
                 }),
             status_code=400,
             mimetype='application/json'
-        ) 
+        )
 
 
     try:
@@ -87,7 +87,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     ###  Verifies JSON type
     except json.JSONDecodeError:
         return request_error(1)
-    
+
     print(f'Request body:{data}')
 
     ###  Verifies request keys
@@ -139,8 +139,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     ai_reply = response.choices[-1].message.content
     messages.append({'role': 'system', 'content': ai_reply})
 
-    print(messages);
-    
+    print(messages)
+
     return func.HttpResponse(
         json.dumps(
             {
